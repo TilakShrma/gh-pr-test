@@ -1,5 +1,6 @@
-timestamps {
-    //node(label: 'NODE_JS_BUILDER') {
+pipeline{
+    agent none
+    timestamps {
         stage('Checkout Git Repo') {
             git credentialsId: 'fe4effdc-f62d-4624-bcc7-d4749675f873',
             branch: 'master',
@@ -11,5 +12,5 @@ timestamps {
         stage('Clean Workspace') {
             cleanWs notFailBuild: true
         }
-    //}
+}
 }
