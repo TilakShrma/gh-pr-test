@@ -1,63 +1,15 @@
-#!/bin/groovy
-pipeline {
-  tools {
-    nodejs 'default-nodejs'
-  }
-  stages {
-    stage('Startup') {
-      steps {
-        script {
-          sh 'npm install'
+timestamps {
+    //node(label: 'NODE_JS_BUILDER') {
+        stage('Checkout Git Repo') {
+            git credentialsId: 'fe4effdc-f62d-4624-bcc7-d4749675f873',
+            branch: 'master',
+            url: 'https://github.com/TilakShrma/gh-pr-test.git'
         }
-      }
-    }
-    stage('Test') {
-      steps {
-        script {
-          sh 'npm run test'
+        stage('Test') {
+            echo "test stage"
         }
-      }
-      post {
-        always {
-          step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'])
+        stage('Clean Workspace') {
+            cleanWs notFailBuild: true
         }
-      }
-    }
-    stage('Build') {
-      steps {
-        script {
-          sh 'npm start'
-          sh 'npm pack'
-        }
-      }
-    }
-    stage('Deploy') {
-      when {
-        expression {
-          currentBuild.result == null || currentBuild.result == 'SUCCESS'
-        }
-      }
-      steps {
-        script {
-          def server = Artifactory.server 'My_Artifactory'
-          uploadArtifact(server)
-        }
-      }
-    }
-  }
-}
-def uploadArtifact(server) {
-  def uploadSpec = """{
-            "files": [
-              {
-                "pattern": "continuous-test-code-coverage-guide*.tgz",
-                "target": "npm-stable/"
-              }
-           ]
-          }"""
-  server.upload(uploadSpec)
-
-  def buildInfo = Artifactory.newBuildInfo()
-  server.upload spec: uploadSpec, buildInfo: buildInfo
-  server.publishBuildInfo buildInfo
+    //}
 }
