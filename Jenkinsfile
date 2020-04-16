@@ -26,7 +26,7 @@ timestamps {
             //     step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: env.GIT_URL]])
             // }
             currentBuild.result = 'SUCCESS'
-            step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: env.GIT_URL]])
+            step([$class: 'MasterCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
             }
             
         }
@@ -40,7 +40,7 @@ timestamps {
             //     step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: env.GIT_URL]])
             // }
             currentBuild.result = 'SUCCESS'
-            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: env.GIT_URL]])
+            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: 'https://github.com/tilsharm-testorg/gh-pr-test.git']])
         }
         }
         stage('Clean Workspace') {
