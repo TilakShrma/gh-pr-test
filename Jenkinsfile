@@ -26,6 +26,7 @@ timestamps {
             //     step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: env.GIT_URL]])
             // }
             currentBuild.result = 'SUCCESS'
+            echo $env.GIT_URL
             step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: env.GIT_URL]])
             }
             
@@ -40,6 +41,7 @@ timestamps {
             //     step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: env.GIT_URL]])
             // }
             currentBuild.result = 'SUCCESS'
+            echo $env.GIT_URL
             step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: env.GIT_URL]])
         }
         }
