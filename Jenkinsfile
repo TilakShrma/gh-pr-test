@@ -1,3 +1,5 @@
+def fullBranchUrl(branchName) { return "${scm.getUserRemoteConfigs()[0].getUrl()}/tree/$branchName" }
+
 timestamps {
     node(label: 'master') {
         stage('Checkout Git Repo') {
@@ -18,30 +20,18 @@ timestamps {
             }
         }
         stage('Record Coverage') {
-            if (env.BRANCH_NAME == 'master') {
-            // steps {
-            //     script {
-            //         currentBuild.result = 'SUCCESS'
-            //      }
-            //     step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: env.GIT_URL]])
-            // }
+            if (env.CHANGE_ID == null) {
             currentBuild.result = 'SUCCESS'
-            step([$class: 'MasterCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
-            }
+            step([$class: 'MasterCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.BRANCH_NAME)]])
+            } 
+            else if (env.CHANGE_ID != null) {
+            currentBuild.result = 'SUCCESS'
+            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.CHANGE_TARGET)]])
+        }
             
         }
         stage('PR Coverage to Github') {
-            //when { allOf {not { branch 'master' }; expression { return env.CHANGE_ID != null }} }
-            if ( env.BRANCH_NAME != 'master' && (env.CHANGE_ID != null)) {
-            // steps {
-            //     script {
-            //         currentBuild.result = 'SUCCESS'
-            //      }
-            //     step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: env.GIT_URL]])
-            // }
-            currentBuild.result = 'SUCCESS'
-            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
-        }
+            
         }
         stage('Clean Workspace') {
             cleanWs notFailBuild: true
