@@ -9,6 +9,14 @@ timestamps {
         }
         stage('Test stage') {
             echo "test stage in progress"
+            echo "Branch name : ....${env.BRANCH_NAME}"
+            echo "Change url : .....${env.CHANGE_URL}"
+            echo "Change target: ....${env.CHANGE_TARGET}"
+            echo "change branch: .....${env.CHANGE_BRANCH}"
+            // sh 'npm install'
+        }
+        stage('Run tests') {
+            // sh 'npm test'
         }
         stage('Archive and Record Tests') {
             if (fileExists('output/coverage/jest/cobertura-coverage.xml')) {
@@ -22,11 +30,11 @@ timestamps {
         stage('Record Coverage') {
             if (env.CHANGE_ID == null) {
             currentBuild.result = 'SUCCESS'
-            step([$class: 'MasterCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.BRANCH_NAME)]])
+            step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: fullBranchUrl(env.BRANCH_NAME)]])
             } 
             else if (env.CHANGE_ID != null) {
             currentBuild.result = 'SUCCESS'
-            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.CHANGE_TARGET)]])
+            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.CHANGE_BRANCH)]])
         }
             
         }
