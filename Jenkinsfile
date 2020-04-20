@@ -12,7 +12,7 @@ timestamps {
             echo "Branch name : ....${env.BRANCH_NAME}"
             echo "Change url : .....${env.CHANGE_URL}"
             echo "Change target: ....${env.CHANGE_TARGET}"
-            echo "change branch: .....${env.CHANGE_BRANCH}"
+            
         }
         stage('Archive and Record Tests') {
             if (fileExists('output/coverage/jest/cobertura-coverage.xml')) {
