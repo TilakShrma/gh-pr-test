@@ -13,10 +13,10 @@ timestamps {
             echo "Change url : .....${env.CHANGE_URL}"
             echo "Change target: ....${env.CHANGE_TARGET}"
             echo "change branch: .....${env.CHANGE_BRANCH}"
-            // sh 'npm install'
+            sh "npm install"
         }
         stage('Run tests') {
-            // sh 'npm test'
+            sh "npm test"
         }
         stage('Archive and Record Tests') {
             if (fileExists('output/coverage/jest/cobertura-coverage.xml')) {
