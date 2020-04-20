@@ -13,12 +13,6 @@ timestamps {
             echo "Change url : .....${env.CHANGE_URL}"
             echo "Change target: ....${env.CHANGE_TARGET}"
             echo "change branch: .....${env.CHANGE_BRANCH}"
-            
-            this.sh '''
-                #!/bin/ksh
-                npm install
-                npm test
-            '''
         }
         stage('Archive and Record Tests') {
             if (fileExists('output/coverage/jest/cobertura-coverage.xml')) {
@@ -36,7 +30,7 @@ timestamps {
             } 
             else if (env.CHANGE_ID != null) {
             currentBuild.result = 'SUCCESS'
-            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.CHANGE_BRANCH)]])
+            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: env.CHANGE_BRANCH]])
         }
             
         }
