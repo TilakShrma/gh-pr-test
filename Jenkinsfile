@@ -46,6 +46,7 @@ timestamps {
             } 
             else if (env.CHANGE_ID != null) {
             currentBuild.result = 'SUCCESS'
+            step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
             step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.CHANGE_BRANCH)]])
         }
             
