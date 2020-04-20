@@ -9,6 +9,8 @@ timestamps {
         }
         stage('Test stage') {
             echo "test stage in progress"
+            echo "Branch name : ....${env.BRANCH_NAME}"
+            echo "Change url : .....${env.CHANGE_URL}"
         }
         stage('Archive and Record Tests') {
             if (fileExists('output/coverage/jest/cobertura-coverage.xml')) {
@@ -26,7 +28,7 @@ timestamps {
             } 
             else if (env.CHANGE_ID != null) {
             currentBuild.result = 'SUCCESS'
-            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.CHANGE_TARGET)]])
+            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.CHANGE_URL)]])
         }
             
         }
