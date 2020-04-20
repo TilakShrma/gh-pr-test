@@ -30,7 +30,7 @@ timestamps {
             } 
             else if (env.CHANGE_ID != null) {
             currentBuild.result = 'SUCCESS'
-            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test/tree/pr-branch']])
+            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.CHANGE_BRANCH)]])
         }
             
         }
