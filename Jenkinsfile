@@ -12,6 +12,11 @@ timestamps {
             echo "Branch name : ....${env.BRANCH_NAME}"
             echo "Change url : .....${env.CHANGE_URL}"
             echo "Change target: ....${env.CHANGE_TARGET}"
+            sh './bin/Install.sh'
+        }
+        stage('Run tests') {
+            script = "./bin/test.sh"
+            sh "./bin/run.sh ${script}"
         }
         stage('Archive and Record Tests') {
             if (fileExists('output/coverage/jest/cobertura-coverage.xml')) {
