@@ -12,6 +12,7 @@ timestamps {
             echo "Branch name : ....${env.BRANCH_NAME}"
             echo "Change url : .....${env.CHANGE_URL}"
             echo "Change target: ....${env.CHANGE_TARGET}"
+            echo "change branch: .....${env.CHANGE_BRANCH}"
             // sh 'npm install'
         }
         stage('Run tests') {
@@ -33,7 +34,7 @@ timestamps {
             } 
             else if (env.CHANGE_ID != null) {
             currentBuild.result = 'SUCCESS'
-            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.CHANGE_TARGET)]])
+            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: fullBranchUrl(env.CHANGE_BRANCH)]])
         }
             
         }
