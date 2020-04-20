@@ -14,7 +14,7 @@ timestamps {
             echo "Change target: ....${env.CHANGE_TARGET}"
             echo "change branch: .....${env.CHANGE_BRANCH}"
             
-            sh '''
+            this.sh '''
                 #!/bin/ksh
                 npm install
                 npm test
