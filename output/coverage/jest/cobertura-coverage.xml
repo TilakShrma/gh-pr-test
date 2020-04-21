@@ -1,4 +1,4 @@
-<coverage lines-valid="1985" lines-covered="1464" line-rate="0.735" branches-valid="1015" branches-covered="663" branch-rate="0.6531999999999999" timestamp="1587378514281" complexity="0" version="0.1">
+<coverage lines-valid="1985" lines-covered="1464" line-rate="0.7345" branches-valid="1015" branches-covered="663" branch-rate="0.6531999999999999" timestamp="1587378514281" complexity="0" version="0.1">
 <sources>
 <source>
 test source 
