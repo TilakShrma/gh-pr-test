@@ -1,15 +1,15 @@
-name: ci
+# name: ci
 
-on: [pull_request]
+# on: [pull_request]
 
-jobs:
+# jobs:
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: ziishaned/jest-reporter-action@v0.0.1
-      - name: Jest test coverage
-        uses: ziishaned/jest-reporter-action@v0.0.1
-        with:
-          github-token: ${{ secrets.gh_secret }}
-          test-command: "yarn jest --coverage"
+#   lint:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: ziishaned/jest-reporter-action@v0.0.1
+#       - name: Jest test coverage
+#         uses: ziishaned/jest-reporter-action@v0.0.1
+#         # with:
+#         #   github-token: ${{ secrets.gh_secret }}
+#         #   test-command: "yarn jest --coverage"
