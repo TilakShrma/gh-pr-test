@@ -2,7 +2,7 @@ def fullBranchUrl(branchName) { return "${scm.getUserRemoteConfigs()[0].getUrl()
 
 def getBranchName() { 
     if(env.CHANGE_ID != null) {
-        return 'test1'
+        return 'test1-new'
     } else {
         return 'master'
     }
@@ -28,6 +28,7 @@ timestamps {
             echo "test stage in progress"
             echo "env.branch_name: ....${env.BRANCH_NAME}"
             echo "env.change_branch: .... ${env.CHANGE_BRANCH}"
+            echo "env.CHANGE_URL:..... ${env.CHANGE_URL}"
             echo "full url when using change branch ..${fullBranchUrl(env.CHANGE_BRANCH)}"
         }
         stage('Archive and Record Tests') {
