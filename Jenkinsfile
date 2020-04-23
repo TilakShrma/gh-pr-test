@@ -17,16 +17,18 @@ def getGitUrl() {
     }
 }
 
-def sampleComment = '''
+def sampleBaseLine = 1
+
+def sampleComment = "
     |----Metrics-----|----BaseLine----|----PR-----|----Delta----|
-    |Skipped Test    |                |      NA   |      NA     |
+    |Skipped Test    | ${sampleBaseLine}|      NA   |      NA     |
     |Failed Test     |   NA           |      NA   |      NA     |
     |Total Test      |   NA           |      NA   |      NA     |
     |Line Coverage % |   NA           |      NA   |      NA     |
     |uncovered lines |   NA           |      NA   |      NA     |
     |Total Lines     |   NA           |      NA   |      NA     |
     |----------------|----------------|-----------|-------------|
-'''
+"
 
 timestamps {
     node(label: 'master') {
@@ -43,6 +45,10 @@ timestamps {
             else {
                 echo 'XML report were not created'
             }
+        }
+        stage('Test Stage'){
+            node --version
+            npm --version
         }
         stage('Copy artifacts from master'){
             if(env.CHANGE_ID != null){
