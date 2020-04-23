@@ -17,7 +17,10 @@ def getGitUrl() {
     }
 }
 
-def sampleBaseLine = 1
+@NonCPS
+groovy.util.Node parseXmlFile(path) {
+    new XmlParser().parseText(readFile(path))
+}
 
 def sampleComment = '''
     |----Metrics-----|----BaseLine----|----PR-----|----Delta----|
@@ -51,8 +54,9 @@ timestamps {
             bat "node --version" 
         }
         stage('parse xml and store result'){
-            def xml = readFile(file: 'output/coverage/jest/cobertura-coverage.xml')
-            def rootNode = new XmlParser().parseText(xml)
+            // def xml = readFile(file: 'output/coverage/jest/cobertura-coverage.xml')
+            // def rootNode = new XmlParser().parseText(xml)
+            groovy.util.Node rootNode = parseXmlFile(buildPlanPath)
             echo "Root node .... ${rootNode}"
         }
         stage('Copy artifacts from master'){
