@@ -43,7 +43,7 @@ timestamps {
             else if (env.CHANGE_ID != null) {
             currentBuild.result = 'SUCCESS'
             step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
-            comment.body('This PR looks good');
+            comment.body = 'PR coverage completed'
         }
             
         }
