@@ -51,7 +51,7 @@ timestamps {
             bat "node --version" 
         }
         stage('parse xml and store result'){
-            def xml = readFile('output/coverage/jest/cobertura-coverage.xml')
+            def xml = readFile(file: 'output/coverage/jest/cobertura-coverage.xml')
             def rootNode = new XmlParser().parseText(xml)
             echo "Root node .... ${rootNode}"
         }
