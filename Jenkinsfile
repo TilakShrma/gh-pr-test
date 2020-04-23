@@ -47,8 +47,8 @@ timestamps {
             }
         }
         stage('Test Stage'){
-            echo "${node --version}"
-            npm --version
+            sh "npm --version"
+            
         }
         stage('Copy artifacts from master'){
             if(env.CHANGE_ID != null){
