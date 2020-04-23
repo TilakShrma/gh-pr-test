@@ -47,7 +47,7 @@ timestamps {
             }
         }
         stage('Test Stage'){
-            sh "npm --version"
+            bat "npm --version"
             
         }
         stage('Copy artifacts from master'){
