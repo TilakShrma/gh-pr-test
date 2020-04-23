@@ -47,7 +47,7 @@ timestamps {
             }
         }
         stage('Test Stage'){
-            node --version
+            echo "${node --version}"
             npm --version
         }
         stage('Copy artifacts from master'){
