@@ -56,7 +56,7 @@ timestamps {
         stage('parse xml and store result'){
             // def xml = readFile(file: 'output/coverage/jest/cobertura-coverage.xml')
             // def rootNode = new XmlParser().parseText(xml)
-            groovy.util.Node rootNode = parseXmlFile(buildPlanPath)
+            groovy.util.Node rootNode = parseXmlFile('output/coverage/jest/cobertura-coverage.xml')
             echo "Root node .... ${rootNode}"
         }
         stage('Copy artifacts from master'){
