@@ -48,7 +48,12 @@ timestamps {
         }
         stage('Test Stage'){
             bat "npm --version"
-            
+            bat "node --version" 
+        }
+        stage('parse xml and store result'){
+            def xml = readFile('output/coverage/jest/cobertura-coverage.xml')
+            def rootNode = new XmlParser().parseText(xml)
+            echo "Root node .... ${rootNode}"
         }
         stage('Copy artifacts from master'){
             if(env.CHANGE_ID != null){
