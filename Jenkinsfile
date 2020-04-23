@@ -19,7 +19,7 @@ def getGitUrl() {
 
 def sampleBaseLine = 1
 
-def sampleComment = "
+def sampleComment = '''
     |----Metrics-----|----BaseLine----|----PR-----|----Delta----|
     |Skipped Test    | ${sampleBaseLine}|      NA   |      NA     |
     |Failed Test     |   NA           |      NA   |      NA     |
@@ -28,7 +28,7 @@ def sampleComment = "
     |uncovered lines |   NA           |      NA   |      NA     |
     |Total Lines     |   NA           |      NA   |      NA     |
     |----------------|----------------|-----------|-------------|
-"
+'''
 
 timestamps {
     node(label: 'master') {
