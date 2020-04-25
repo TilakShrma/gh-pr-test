@@ -17,11 +17,6 @@ def getGitUrl() {
     }
 }
 
-@NonCPS
-groovy.util.Node parseXmlFile(path) {
-    new XmlParser().parseText(readFile(path))
-}
-
 def sampleComment = '''
     |----Metrics-----|----BaseLine----|----PR-----|----Delta----|
     |Skipped Test    | ${sampleBaseLine}|      NA   |      NA     |
@@ -49,19 +44,10 @@ timestamps {
                 echo 'XML report were not created'
             }
         }
-        stage('Test Stage'){
-            bat "npm --version"
-            bat "node --version" 
-        }
-        stage('parse xml and store result'){
-            // def xml = readFile(file: 'output/coverage/jest/cobertura-coverage.xml')
-            // def rootNode = new XmlParser().parseText(xml)
-            groovy.util.Node rootNode = parseXmlFile('output/coverage/jest/cobertura-coverage.xml')
-            echo "Root node .... ${rootNode}"
-        }
         stage('Copy artifacts from master'){
             if(env.CHANGE_ID != null){
             copyArtifacts filter: 'output/coverage/jest/cobertura-coverage.xml', projectName: 'master', selector: lastCompleted(), target: '/master'
+            bat "dir"
             }
         }
         stage('Record Coverage') {
