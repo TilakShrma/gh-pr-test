@@ -38,7 +38,7 @@ timestamps {
         stage('Archive and Record Tests') {
             if (fileExists('output/coverage/jest/cobertura-coverage.xml')) {
                 archiveArtifacts 'output/coverage/jest/cobertura-coverage.xml'
-                archiveArtifacts 'output/coverage/jest/cobertura-coverage.xml'
+                archiveArtifacts 'output/coverage/jest/jest-junit.xml'
                 cobertura coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'
             }
             else {
