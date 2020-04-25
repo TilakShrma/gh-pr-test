@@ -48,6 +48,7 @@ timestamps {
         stage('Copy artifacts from master'){
             if(env.CHANGE_ID != null){
             copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
+            bat "cd master"
             bat "dir"
             }
         }
