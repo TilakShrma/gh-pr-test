@@ -38,6 +38,7 @@ timestamps {
         stage('Archive and Record Tests') {
             if (fileExists('output/coverage/jest/cobertura-coverage.xml')) {
                 archiveArtifacts 'output/coverage/jest/cobertura-coverage.xml'
+                archiveArtifacts 'output/coverage/jest/cobertura-coverage.xml'
                 cobertura coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'
             }
             else {
@@ -46,7 +47,7 @@ timestamps {
         }
         stage('Copy artifacts from master'){
             if(env.CHANGE_ID != null){
-            copyArtifacts filter: 'output/coverage/jest/cobertura-coverage.xml', projectName: 'master', selector: lastCompleted(), target: '/master'
+            copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
             bat "dir"
             }
         }

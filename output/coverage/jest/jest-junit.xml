@@ -1,10 +1,42 @@
-<testsuites name="jest tests" tests="2" failures="0" time="45.6">
-  <testsuite name="addition" tests="1" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:42:28" time="0.161">
-    <testcase classname="addition positive numbers should add up" name="addition positive numbers should add up" time="0.004">
-    </testcase>
-  </testsuite>
-  <testsuite name="addition" tests="1" errors="0" failures="0" skipped="1" timestamp="2017-07-13T09:42:28" time="0.161">
-    <testcase classname="addition positive numbers should add up" name="addition positive numbers should add up" time="0.004">
-    </testcase>
-  </testsuite>
+<testsuites name="jest tests" tests="458" failures="0" time="45.6">
+<testsuite name="<CreateTrialComponent />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:09" time="13.663" tests="94">...</testsuite>
+<testsuite name="customer actions" errors="0" failures="0" skipped="1" timestamp="2020-04-23T07:00:22" time="2.466" tests="22">...</testsuite>
+<testsuite name="<SignUp />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:25" time="2.431" tests="34">...</testsuite>
+<testsuite name="utils.links" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:28" time="0.172" tests="27">...</testsuite>
+<testsuite name="<CreateTrial />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:28" time="1.17" tests="18">...</testsuite>
+<testsuite name="customer reducer" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:29" time="0.225" tests="15">...</testsuite>
+<testsuite name="sdk.metrics" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:30" time="0.358" tests="14">...</testsuite>
+<testsuite name="<SignUpDG />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:30" time="2.503" tests="34">...</testsuite>
+<testsuite name="<SignUp />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:33" time="1.376" tests="12">...</testsuite>
+<testsuite name="locales" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:34" time="0.678" tests="29">...</testsuite>
+<testsuite name="order actions" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:35" time="0.422" tests="5">...</testsuite>
+<testsuite name="PasswordTooltip" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:36" time="0.636" tests="6">...</testsuite>
+<testsuite name="<CheckOrderStatus />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:37" time="1.014" tests="9">...</testsuite>
+<testsuite name="appStart" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:38" time="0.358" tests="11">...</testsuite>
+<testsuite name="App" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:38" time="2.505" tests="5">...</testsuite>
+<testsuite name="<PinChallenge />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:41" time="0.477" tests="7">...</testsuite>
+<testsuite name="utils.metrics-errors" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:42" time="0.167" tests="5">...</testsuite>
+<testsuite name="test filter function with productGroups" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:42" time="0.249" tests="7">...</testsuite>
+<testsuite name="<ExistingUserModal />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:42" time="0.524" tests="8">...</testsuite>
+<testsuite name="SignupWrapper function" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:43" time="1.575" tests="20">...</testsuite>
+<testsuite name="poller" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:45" time="0.137" tests="4">...</testsuite>
+<testsuite name="Session" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:45" time="0.127" tests="3">...</testsuite>
+<testsuite name="featureToggle" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:45" time="0.131" tests="11">...</testsuite>
+<testsuite name="<PinChallenge />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:46" time="0.339" tests="5">...</testsuite>
+<testsuite name="When no JS errors are caught in a child component" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:46" time="0.163" tests="4">...</testsuite>
+<testsuite name="<OnlineFooter />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:46" time="0.377" tests="5">...</testsuite>
+<testsuite name="utils.common" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:47" time="0.12" tests="5">...</testsuite>
+<testsuite name="<ThankYou />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:47" time="0.475" tests="4">...</testsuite>
+<testsuite name="order reducer" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:48" time="0.116" tests="5">...</testsuite>
+<testsuite name="<Header />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:48" time="0.406" tests="10">...</testsuite>
+<testsuite name="<TimeoutModal />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:48" time="0.404" tests="3">...</testsuite>
+<testsuite name="<App />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:49" time="0.336" tests="1">...</testsuite>
+<testsuite name="test setCookieForWebex" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:50" time="0.275" tests="5">...</testsuite>
+<testsuite name="<ExpiredSession />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:50" time="0.371" tests="2">...</testsuite>
+<testsuite name="<TrackingId />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:50" time="0.282" tests="2">...</testsuite>
+<testsuite name="<MetaComponent />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:51" time="0.255" tests="1">...</testsuite>
+<testsuite name="tests for <TopbarMobile />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:51" time="0.105" tests="2">...</testsuite>
+<testsuite name="<TemplateInterpolation />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:52" time="0.106" tests="1">...</testsuite>
+<testsuite name="track" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:52" time="0.103" tests="1">...</testsuite>
+<testsuite name="<Timeline />" errors="0" failures="0" skipped="0" timestamp="2020-04-23T07:00:52" time="0.113" tests="2">...</testsuite>
 </testsuites>
