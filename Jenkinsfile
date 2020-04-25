@@ -17,18 +17,23 @@ def getGitUrl() {
     }
 }
 
+def sampleComment = '''
+    |----Metrics-----|----BaseLine----|----PR-----|----Delta----|
+    |Skipped Test    | ${sampleBaseLine}|      NA   |      NA     |
+    |Failed Test     |   NA           |      NA   |      NA     |
+    |Total Test      |   NA           |      NA   |      NA     |
+    |Line Coverage % |   NA           |      NA   |      NA     |
+    |uncovered lines |   NA           |      NA   |      NA     |
+    |Total Lines     |   NA           |      NA   |      NA     |
+    |----------------|----------------|-----------|-------------|
+'''
+
 timestamps {
     node(label: 'master') {
         stage('Checkout Git Repo') {
             git credentialsId: 'fe4effdc-f62d-4624-bcc7-d4749675f873',
             branch: getBranchName(),
             url: getGitUrl()
-        }
-        stage('Test stage') {
-            echo "test stage in progress"
-            echo "env.branch_name: ....${env.BRANCH_NAME}"
-            echo "env.change_branch: .... ${env.CHANGE_BRANCH}"
-            echo "full url when using change branch ..${fullBranchUrl(env.CHANGE_BRANCH)}"
         }
         stage('Archive and Record Tests') {
             if (fileExists('output/coverage/jest/cobertura-coverage.xml')) {
@@ -39,6 +44,12 @@ timestamps {
                 echo 'XML report were not created'
             }
         }
+        stage('Copy artifacts from master'){
+            if(env.CHANGE_ID != null){
+            copyArtifacts filter: 'output/coverage/jest/cobertura-coverage.xml', projectName: 'master', selector: lastCompleted(), target: '/master'
+            bat "dir"
+            }
+        }
         stage('Record Coverage') {
             if (env.CHANGE_ID == null) {
             currentBuild.result = 'SUCCESS'
@@ -47,10 +58,8 @@ timestamps {
             else if (env.CHANGE_ID != null) {
             currentBuild.result = 'SUCCESS'
             step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
+            pullRequest.comment(sampleComment)
         }
-            
-        }
-        stage('PR Coverage to Github') {
             
         }
         stage('Clean Workspace') {

@@ -38,7 +38,8 @@
     ]
   },
   "devDependencies": {
+    "jest-html-reporters": "^1.1.8",
     "jest-junit": "^10.0.0",
-    "jest-html-reporters": "^1.1.8"
+    "junit-xml-parser": "0.0.3"
   }
 }
