@@ -52,20 +52,11 @@ timestamps {
         }
         stage('Generate comparision metrics'){
             if(env.CHANGE_ID != null){
-                if(fileExists('master/cobertura-coverage.xml')){
-                    echo "master cobertura exists"
-                }
-                if(fileExists('master/jest-junit.xml')){
-                    echo "jest junit exisz"
-                }
-                if(fileExists('master/cobertura-coverage.xml')){
-                    echo "master cobertura exists"
-                }
                 if(fileExists('master/output/coverage/jest/cobertura-coverage.xml')){
-                    echo "hello 1"
+                    echo "master cobertura report found"
                 }
                 if(fileExists('master/output/coverage/jest/jest-junit.xml')){
-                    echo "hello 2"
+                    echo "master jest report found"
                 }
             }
         }
