@@ -36,7 +36,7 @@ timestamps {
             url: getGitUrl()
         }
         stage('Archive and Record Tests') {
-            if (fileExists('output/coverage/jest/cobertura-coverage.xml')) {
+            if (fileExists('output/coverage/jest/cobertura-coverage.xml') && fileExists('output/coverage/jest/jest-junit.xml')) {
                 archiveArtifacts 'output/coverage/jest/cobertura-coverage.xml'
                 archiveArtifacts 'output/coverage/jest/jest-junit.xml'
                 cobertura coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml'
@@ -48,8 +48,25 @@ timestamps {
         stage('Copy artifacts from master'){
             if(env.CHANGE_ID != null){
             copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
-            bat "cd master"
-            bat "dir"
+            }
+        }
+        stage('Generate comparision metrics'){
+            if(env.CHANGE_ID != null){
+                if(fileExists('master/cobertura-coverage.xml')){
+                    echo "master cobertura exists"
+                }
+                if(fileExists('master/jest-junit.xml')){
+                    echo "jest junit exisz"
+                }
+                if(fileExists('master/cobertura-coverage.xml')){
+                    echo "master cobertura exists"
+                }
+                if(fileExists('master/output/coverage/jest/cobertura-coverage.xml')){
+                    echo "hello 1"
+                }
+                if(fileExists('master/output/coverage/jest/jest-junit.xml')){
+                    echo "hello 2"
+                }
             }
         }
         stage('Record Coverage') {
