@@ -60,7 +60,7 @@ timestamps {
             }
         }
         stage('Record Coverage') {
-            if (env.CHANGE_ID == null) {
+            if (env.CHANGE_ID != null) {
             // currentBuild.result = 'SUCCESS'
             // step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
             // } 

@@ -1,5 +1,5 @@
-<testsuites name="jest tests" tests="2" failures="0" time="45.6">
-  <testsuite name="addition" tests="1" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:42:28" time="0.161">
+<testsuites name="jest tests" tests="3" failures="0" time="45.6">
+  <testsuite name="addition" tests="3" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:42:28" time="0.161">
     <testcase classname="addition positive numbers should add up" name="addition positive numbers should add up" time="0.004">
     </testcase>
   </testsuite>
