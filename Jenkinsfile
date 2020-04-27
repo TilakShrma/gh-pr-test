@@ -48,15 +48,15 @@ timestamps {
         stage('Copy artifacts from master'){
             if(env.CHANGE_ID != null){
                 copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
+                bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/cobertura-coverage.xml --type=cobertura"
+                bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/jest-junit.xml --type=jest"
                 bat "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/cobertura-coverage.xml --type=cobertura"
                 bat "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/jest-junit.xml --type=jest"
             }
         }
         stage('Generate comparision metrics'){
-            if(fileExists('master/output/coverage/jest/cobertura-coverage.xml') && fileExists('master/output/coverage/jest/jest-junit.xml')){
-                bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/cobertura-coverage.xml --type=cobertura"
-                bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/jest-junit.xml --type=jest"
-                bat "dir"                
+            if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')){
+                echo "coverage report found for master and pr"
             }
         }
         stage('Record Coverage') {
