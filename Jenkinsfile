@@ -55,6 +55,7 @@ timestamps {
             }
         }
         stage('Generate comparision metrics'){
+            bat "dir"
             if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')){
                 echo "coverage report found for master and pr"
             }
