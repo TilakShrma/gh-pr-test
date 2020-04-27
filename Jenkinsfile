@@ -47,27 +47,26 @@ timestamps {
         }
         stage('Copy artifacts from master'){
             if(env.CHANGE_ID != null){
-            copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
+                copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
+                bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/cobertura-coverage.xml --type=cobertura"
+                bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/jest-junit.xml --type=jest"
+                bat "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/cobertura-coverage.xml --type=cobertura"
+                bat "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/jest-junit.xml --type=jest"
             }
         }
         stage('Generate comparision metrics'){
-            if(env.CHANGE_ID != null){
-                if(fileExists('master/output/coverage/jest/cobertura-coverage.xml')){
-                    echo "master cobertura report found"
-                }
-                if(fileExists('master/output/coverage/jest/jest-junit.xml')){
-                    echo "master jest report found"
-                }
+            if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')){
+                echo "coverage report found for master and pr"
             }
         }
         stage('Record Coverage') {
             if (env.CHANGE_ID == null) {
-            currentBuild.result = 'SUCCESS'
-            step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
-            } 
-            else if (env.CHANGE_ID != null) {
-            currentBuild.result = 'SUCCESS'
-            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
+            // currentBuild.result = 'SUCCESS'
+            // step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
+            // } 
+            // else if (env.CHANGE_ID != null) {
+            // currentBuild.result = 'SUCCESS'
+            // step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
             pullRequest.comment(sampleComment)
         }
             
