@@ -69,6 +69,7 @@ timestamps {
                 } 
                 catch (Exception e) {
                     echo "exception while metrics : ${e}"
+                    pullRequest.comment(result)
                 }
             }
         }
