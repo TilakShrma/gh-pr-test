@@ -58,20 +58,9 @@ timestamps {
             if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')){
                 echo "coverage report found for master and pr"
                 def result = bat (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true)
-                echo result
+                pullRequest.comment(result)
             }
-        }
-        stage('Record Coverage') {
-            if (env.CHANGE_ID != null) {
-            currentBuild.result = 'SUCCESS'
-            step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
-            } 
-            else if (env.CHANGE_ID != null) {
-            currentBuild.result = 'SUCCESS'
-            step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
-            pullRequest.comment(sampleComment)
-        }
-            
+        } 
         }
         stage('Clean Workspace') {
             cleanWs notFailBuild: true
