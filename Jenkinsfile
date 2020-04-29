@@ -60,7 +60,6 @@ timestamps {
                 def result = bat (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true)
                 pullRequest.comment(result)
             }
-        } 
         }
         stage('Clean Workspace') {
             cleanWs notFailBuild: true
