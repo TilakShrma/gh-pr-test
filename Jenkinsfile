@@ -57,7 +57,7 @@ timestamps {
         stage('Generate comparision metrics'){
             if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')){
                 echo "coverage report found for master and pr"
-                def result = bat (script: "bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true)
+                def result = bat (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true)
                 echo result
             }
         }
