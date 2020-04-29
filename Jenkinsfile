@@ -48,18 +48,28 @@ timestamps {
         stage('Copy artifacts from master'){
             if(env.CHANGE_ID != null){
                 copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
+                try {
                 bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/cobertura-coverage.xml --type=cobertura"
                 bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/jest-junit.xml --type=jest"
                 bat "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/cobertura-coverage.xml --type=cobertura"
                 bat "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/jest-junit.xml --type=jest"
+                } 
+                catch (Exception e) {
+                    echo "exception while generation json : ${e}"
+                }
             }
         }
         stage('Generate comparision metrics'){
             if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')){
                 echo "coverage report found for master and pr"
+                try{
                 def result = bat (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true)
                 currentBuild.result = 'SUCCESS'
                 pullRequest.comment(result)
+                } 
+                catch (Exception e) {
+                    echo "exception while metrics : ${e}"
+                }
             }
         }
         stage('Clean Workspace') {
