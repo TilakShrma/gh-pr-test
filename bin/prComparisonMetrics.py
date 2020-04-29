@@ -103,7 +103,7 @@ def buildTabularData(jsonResult):
     #     baseline.get('lines-valid') - baseline.get('lines-covered'), pr.get('lines-valid') - pr.get('lines-covered'), delta.get('lines-valid') - delta.get('lines-covered'),
     #     baseline.get('lines-valid'), pr.get('lines-valid'), delta.get('lines-valid'),
     # )
-    return table
+    return table.draw()
 
 
 
