@@ -121,6 +121,8 @@ if __name__ == '__main__':
     isValidArgs = validateFiles(inputFiles)
 
     if isValidArgs:
-        sys.exit(main(inputFiles))
+        # sys.exit(main(inputFiles))
+        result = main(inputFiles)
+        return result
     else:
         sys.exit()
