@@ -37,13 +37,13 @@ timestamps {
         stage('Generate Comparison metrics'){
             if(env.CHANGE_ID != null){
                 copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
-                try {
+                try{
                     powershell "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/cobertura-coverage.xml --type=cobertura"
                     powershell "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/jest-junit.xml --type=jest"
                     powershell "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/cobertura-coverage.xml --type=cobertura"
                     powershell "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/jest-junit.xml --type=jest"
                 } 
-                catch (Exception e) {
+                catch (Exception e){
                     echo "exception while parsing xml coverage : ${e}"
                     throw e
                 }
