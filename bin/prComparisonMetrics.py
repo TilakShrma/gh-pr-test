@@ -59,7 +59,7 @@ def buildTabularData(jsonResult):
     }
     
     table_border = "\n+{:-<20}+{:-<20}+{:-<20}+{:-<20}+\n".format('-','-','-','-')
-    table = table_border + "|{:-^20s}|{:-^<20s}|{:-^20s}|{:-^20s}|".format('Metrics', 'Baseline', 'PR', 'Delta') + table_border
+    table = table_border + "|{:-^20}|{:-^<20}|{:-^20}|{:-^20}|".format('Metrics', 'Baseline', 'PR', 'Delta') + table_border
     # table = Texttable()
     # table.add_row(['Metrics', 'Baseline', 'PR', 'Delta'])
     # table.set_cols_align(["c", "c", "c", "c"])
