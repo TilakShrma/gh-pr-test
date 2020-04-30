@@ -81,7 +81,7 @@ def buildTabularData(jsonResult):
             delta = jsonResult.get('delta').get('lines-valid') - jsonResult.get('delta').get('lines-covered')
         
         # table.add_row([key, baseline, pr, delta])
-        row = "\n|{:-^20}|{:-^20}|{:-^20}|{:-^20}|".format(key,baseline,pr,delta)
+        row = "\n|{: <20}|{: <20}|{: <20}|{: <20}|".format(key,baseline,pr,delta)
         table = table + row
     
     # print table.draw()
