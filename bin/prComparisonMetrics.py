@@ -58,8 +58,8 @@ def buildTabularData(jsonResult):
         'Total Lines': 'lines-valid'
     }
     
-    table_border = "\n+{:-<20}+{:-<20}+{:-<20}+{:-<20}+\n".format('-','-','-','-')
-    table = table_border + "|{:-^20}|{:-^<20}|{:-^20}|{:-^20}|".format('Metrics', 'Baseline', 'PR', 'Delta') + table_border
+    # table_border = "\n+{:-<20}+{:-<20}+{:-<20}+{:-<20}+\n".format('-','-','-','-')
+    table = "|{:*^20s}|{:*^20s}|{:*^20s}|{:*^20s}|".format('Metrics', 'Baseline', 'PR', 'Delta')
     # table = Texttable()
     # table.add_row(['Metrics', 'Baseline', 'PR', 'Delta'])
     # table.set_cols_align(["c", "c", "c", "c"])
@@ -82,8 +82,8 @@ def buildTabularData(jsonResult):
             delta = jsonResult.get('delta').get('lines-valid') - jsonResult.get('delta').get('lines-covered')
         
         # table.add_row([key, baseline, pr, delta])
-        row = "\n|{:<20s}|{:<20f}|{:<20f}|{:<20f}|".format(key,baseline,pr,delta)
-        table = table + row + table_border
+        row = "\n|{: <20s}|{: <20}|{: <20}|{: <20}|".format(key,baseline,pr,delta)
+        table = table + row
     
     # print table.draw()
     # print type(table)

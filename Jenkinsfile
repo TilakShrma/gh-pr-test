@@ -66,6 +66,8 @@ timestamps {
                 echo "coverage report found for master and pr"
                 try{
                 result = bat (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true).trim()
+                echo "script execution result :"
+                echo "${result}"
                 pullRequest.comment(result)
                 } 
                 catch (Exception e) {
