@@ -61,11 +61,11 @@ timestamps {
             if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')){
                 echo "coverage report found for master and pr"
                 try{
-                stdout = bat (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true).trim()
+                stdout = powershell (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true).trim()
                 echo "script execution result :"
                 echo "${result}"
-                result = stdout.readLines().drop(1).join(" ")
-                pullRequest.comment(result)
+                // result = stdout.readLines().drop(1).join(" ")
+                pullRequest.comment(stdout)
                 } 
                 catch (Exception e) {
                     echo "exception while metrics : ${e}"
