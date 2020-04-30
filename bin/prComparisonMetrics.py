@@ -89,20 +89,22 @@ def buildTabularData(jsonResult):
     delta = jsonResult.get('delta')
     table = """
         |{:-^18}|{:-^18}|{:-^18}|{:-^18}|
-        |Skipped Test    |{:<20}|{:<20}|{:<20}|
-        |Failed Test     |{:<20}|{:<20}|{:<20}|
-        |Total Test      |{:<20}|{:<20}|{:<20}|
-        |Line Coverage   |{:<20}|{:<20}|{:<20}|
-        |uncovered lines |{:<20}|{:<20}|{:<20}|
-        |Total Lines     |{:<20}|{:<20}|{:<20}|
+        |{:<20}|{:<20}|{:<20}|{:<20}|
+        |{:<20}|{:<20}|{:<20}|{:<20}|
+        |{:<20}|{:<20}|{:<20}|{:<20}|
+        |{:<20}|{:<20}|{:<20}|{:<20}|
+        |{:<20}|{:<20}|{:<20}|{:<20}|
+        |{:<20}|{:<20}|{:<20}|{:<20}|
         
     """.format('Metrics', 'Baseline', 'PR', 'Delta',
-        baseline.get('skipped'), pr.get('skipped'), delta.get('skipped'),
-        baseline.get('failures'), pr.get('failures'), delta.get('failures'),
-        baseline.get('tests'), pr.get('tests'), delta.get('tests'),
-        baseline.get('line-rate')*100, pr.get('line-rate')*100, delta.get('line-rate')*100,
-        baseline.get('lines-valid') - baseline.get('lines-covered'), pr.get('lines-valid') - pr.get('lines-covered'), delta.get('lines-valid') - delta.get('lines-covered'),
-        baseline.get('lines-valid'), pr.get('lines-valid'), delta.get('lines-valid'),
+        'Skipped Test', baseline.get('skipped'), pr.get('skipped'), delta.get('skipped'),
+        'Failed Test', baseline.get('failures'), pr.get('failures'), delta.get('failures'),
+        'Total Test', baseline.get('tests'), pr.get('tests'), delta.get('tests'),
+        'Line Coverage', baseline.get('line-rate')*100, pr.get('line-rate')*100, delta.get('line-rate')*100,
+        'uncovered lines', baseline.get('lines-valid') - baseline.get('lines-covered'),
+        pr.get('lines-valid') - pr.get('lines-covered'),
+        delta.get('lines-valid') - delta.get('lines-covered'),
+        'Total Lines', baseline.get('lines-valid'), pr.get('lines-valid'), delta.get('lines-valid'),
     )
 
     # return table.draw()
