@@ -84,6 +84,9 @@ def buildTabularData(jsonResult):
     # print type(table)
     # print type(table.draw.__str__())
     # return table._fmt_text(table)
+    baseline = jsonResult.get('baseline')
+    pr = jsonResult.get('PR')
+    delta = jsonResult.get('delta')
     table = """
         |----Metrics-----|----BaseLine----|----PR-----|----Delta----|
         |Skipped Test    |      %d        |    %d     |      %d     |
