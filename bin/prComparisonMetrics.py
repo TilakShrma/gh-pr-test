@@ -57,12 +57,13 @@ def buildTabularData(jsonResult):
         'Uncovered Lines': 'uncovered lines',
         'Total Lines': 'lines-valid'
     }
-
-    # table = "|\tMetrics\t|\tBaseLine\t|\tPR\t|\tDelta\t|"
-    table = Texttable()
-    table.add_row(['Metrics', 'Baseline', 'PR', 'Delta'])
-    table.set_cols_align(["c", "c", "c", "c"])
-    table.set_cols_width([10,10,10,20])
+    
+    table_border = "\n+{:-<20}+{:-<20}+{:-<20}+{:-<20}+\n".format('-','-','-','-')
+    table = table_border + "|{:<20}|{:<20}|{:<20}|{:<20}|".format('Metrics', 'Baseline', 'PR', 'Delta') + table_border
+    # table = Texttable()
+    # table.add_row(['Metrics', 'Baseline', 'PR', 'Delta'])
+    # table.set_cols_align(["c", "c", "c", "c"])
+    # table.set_cols_width([10,10,10,20])
     for key in tableMapping.keys():
         attribute = tableMapping.get(key)
         pr = jsonResult.get('PR').get(attribute)
@@ -80,9 +81,9 @@ def buildTabularData(jsonResult):
             baseline = jsonResult.get('baseline').get('lines-valid') - jsonResult.get('baseline').get('lines-covered')
             delta = jsonResult.get('delta').get('lines-valid') - jsonResult.get('delta').get('lines-covered')
         
-        table.add_row([key, baseline, pr, delta])
-        # row = "\n|{}\t|{}\t\t|{}\t\t|{}\t\t|".format(key,baseline,pr,delta)
-        # table = table + row
+        # table.add_row([key, baseline, pr, delta])
+        row = "\n|{:<20}|{:<20}|{:<20}|{:<20}|".format(key,baseline,pr,delta)
+        table = table + row + table_border
     
     # print table.draw()
     # print type(table)
@@ -104,7 +105,8 @@ def buildTabularData(jsonResult):
     #     baseline.get('lines-valid') - baseline.get('lines-covered'), pr.get('lines-valid') - pr.get('lines-covered'), delta.get('lines-valid') - delta.get('lines-covered'),
     #     baseline.get('lines-valid'), pr.get('lines-valid'), delta.get('lines-valid'),
     # )
-    return table.draw()
+    # return table.draw()
+    return table
 
 
 
