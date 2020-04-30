@@ -53,7 +53,7 @@ def generateMetricsTable(metrics):
     pr = metrics.get('PR')
     delta = metrics.get('delta')
     
-    table = """
+    metrics_table = """
         |{:-^16}|{:-^9}|{:-^6}|{:-^6}|
         |{:<16}|{:<9}|{:<6}|{:<6}|
         |{:<16}|{:<9}|{:<6}|{:<6}|
