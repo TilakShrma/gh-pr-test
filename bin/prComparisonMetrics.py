@@ -62,7 +62,7 @@ def buildTabularData(jsonResult):
     table = Texttable()
     table.add_row(['Metrics', 'Baseline', 'PR', 'Delta'])
     table.set_cols_align(["c", "c", "c", "c"])
-    table.set_cols_width([10,10,10,10])
+    table.set_cols_width([10,10,10,20])
     for key in tableMapping.keys():
         attribute = tableMapping.get(key)
         pr = jsonResult.get('PR').get(attribute)
