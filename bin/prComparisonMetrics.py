@@ -82,7 +82,7 @@ def buildTabularData(jsonResult):
             delta = jsonResult.get('delta').get('lines-valid') - jsonResult.get('delta').get('lines-covered')
         
         # table.add_row([key, baseline, pr, delta])
-        row = "\n|{:<20s}|{:<20s}|{:<20s}|{:<20s}|".format(key,baseline,pr,delta)
+        row = "\n|{:<20s}|{:<20f}|{:<20f}|{:<20f}|".format(key,baseline,pr,delta)
         table = table + row + table_border
     
     # print table.draw()
