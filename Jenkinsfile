@@ -17,15 +17,6 @@ def getGitUrl() {
     }
 }
 
-def sampleComment = '''
-    | Command | Description |
-    | --- | --- |
-    | git status | List all new or modified files |
-    | git diff | Show file differences that haven't been staged |
-'''
-
-def result = ''
-
 timestamps {
     node(label: 'master') {
         stage('Checkout Git Repo') {
@@ -43,33 +34,24 @@ timestamps {
                 echo 'XML report were not created'
             }
         }
-        stage('Copy artifacts from master'){
+        stage('Generate Comparison metrics'){
             if(env.CHANGE_ID != null){
                 copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
                 try {
-                bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/cobertura-coverage.xml --type=cobertura"
-                bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/jest-junit.xml --type=jest"
-                bat "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/cobertura-coverage.xml --type=cobertura"
-                bat "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/jest-junit.xml --type=jest"
+                    powershell "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/cobertura-coverage.xml --type=cobertura"
+                    powershell "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/jest-junit.xml --type=jest"
+                    powershell "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/cobertura-coverage.xml --type=cobertura"
+                    powershell "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/jest-junit.xml --type=jest"
                 } 
                 catch (Exception e) {
-                    echo "exception while generation json : ${e}"
+                    echo "exception while parsing xml coverage : ${e}"
+                    throw e
                 }
-            }
-        }
-        stage('Generate comparision metrics'){
-            if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')){
-                echo "coverage report found for master and pr"
-                try{
-                stdout = powershell (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true)
-                echo "script execution result :"
-                echo "${stdout}"
-                // result = stdout.readLines().drop(1).join(" ")
-                pullRequest.comment(stdout)
-                } 
-                catch (Exception e) {
-                    echo "exception while metrics : ${e}"
-                    pullRequest.comment(result)
+                if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')) {
+                    try {
+                        result = powershell (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true)
+                        pullRequest.comment(result)
+                    }
                 }
             }
         }

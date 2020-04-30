@@ -25,6 +25,7 @@ def writeJsonToFile(json_dump, globPattern, fileType):
         json.dump(json_dump, json_file)
 
 def parseCobertura(files):
+    # required attributes from cobertura coverage
     coverage_metrics = {
         'lines-valid': 0,
         'line-rate': 0,
@@ -43,6 +44,7 @@ def parseCobertura(files):
     return coverage_metrics
 
 def parseJest(files):
+    # required attributes from jest coverage
     coverage_metrics = {
         'tests': 0,
         'failures': 0,

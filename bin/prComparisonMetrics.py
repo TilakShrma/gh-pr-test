@@ -28,73 +28,39 @@ def generateDelta(baseline, pr):
 
 
 
-def generateComparisionMetrics(files):
+def generateComparisonMetrics(files):
     pr_metrics = {}
     baseline_metrics = {}
     delta = {}
-    comparision_metrics = {}
+    comparison_metrics = {}
 
     for file in files:
         if 'master' in file:
             with open(file, 'r') as json_file:
                 baseline_metrics = json.load(json_file)
-                comparision_metrics['baseline'] = baseline_metrics
+                comparison_metrics['baseline'] = baseline_metrics
         else:
             with open(file, 'r') as json_file:
                 pr_metrics = json.load(json_file)
-                comparision_metrics['PR'] = pr_metrics
+                comparison_metrics['PR'] = pr_metrics
     
     delta = generateDelta(baseline_metrics, pr_metrics)
-    comparision_metrics['delta'] = delta
-    return comparision_metrics
+    comparison_metrics['delta'] = delta
+    return comparison_metrics
 
-def buildTabularData(jsonResult):
-    tableMapping = {
-        'Skipped Test': 'skipped',
-        'Failed Test': 'failures',
-        'Total Test': 'tests',
-        'Line Coverage': 'line-rate',
-        'Uncovered Lines': 'uncovered lines',
-        'Total Lines': 'lines-valid'
-    }
+def generateMetricsTable(metrics):
+    baseline = metrics.get('baseline')
+    pr = metrics.get('PR')
+    delta = metrics.get('delta')
     
-    # table = """|{:-^20}|{:-^20}|{:-^20}|{:-^20}|""".format('Metrics', 'Baseline', 'PR', 'Delta')
-    # for key in tableMapping.keys():
-    #     attribute = tableMapping.get(key)
-    #     pr = jsonResult.get('PR').get(attribute)
-    #     baseline = jsonResult.get('baseline').get(attribute)
-    #     delta = jsonResult.get('delta').get(attribute)
-
-    #     # line coverage to be displayed as percentage
-    #     if key is 'Line Coverage':
-    #         pr *= 100
-    #         baseline *= 100
-    #         delta *= 100
-        
-    #     if key is 'Uncovered Lines':
-    #         pr = jsonResult.get('PR').get('lines-valid') - jsonResult.get('PR').get('lines-covered')
-    #         baseline = jsonResult.get('baseline').get('lines-valid') - jsonResult.get('baseline').get('lines-covered')
-    #         delta = jsonResult.get('delta').get('lines-valid') - jsonResult.get('delta').get('lines-covered')
-        
-    #     # table.add_row([key, baseline, pr, delta])
-    #     row = """\n|{: <20}|{: <20}|{: <20}|{: <20}|""".format(key,baseline,pr,delta)
-    #     table = table + row
-    
-    # print table.draw()
-    # print type(table)
-    # print type(table.draw.__str__())
-    # return table._fmt_text(table)
-    baseline = jsonResult.get('baseline')
-    pr = jsonResult.get('PR')
-    delta = jsonResult.get('delta')
     table = """
-        |{:-^16}|{:-^9}|{:-^4}|{:-^6}|
-        |{:<16}|{:<9d}|{:<4d}|{:<6d}|
-        |{:<16}|{:<9d}|{:<4d}|{:<6d}|
-        |{:<16}|{:<9d}|{:<4d}|{:<6d}|
-        |{:<16}|{:<9}|{:<4}|{:<6}|
-        |{:<16}|{:<9d}|{:<4d}|{:<6d}|
-        |{:<16}|{:<9d}|{:<4d}|{:<6d}|
+        |{:-^16}|{:-^9}|{:-^6}|{:-^6}|
+        |{:<16}|{:<9}|{:<6}|{:<6}|
+        |{:<16}|{:<9}|{:<6}|{:<6}|
+        |{:<16}|{:<9}|{:<6}|{:<6}|
+        |{:<16}|{:<9}|{:<6}|{:<6}|
+        |{:<16}|{:<9}|{:<6}|{:<6}|
+        |{:<16}|{:<9}|{:<6}|{:<6}|
         
     """.format('Metrics', 'Baseline', 'PR', 'Delta',
         'Skipped Test', baseline.get('skipped'), pr.get('skipped'), delta.get('skipped'),
@@ -107,18 +73,14 @@ def buildTabularData(jsonResult):
         'Total Lines', baseline.get('lines-valid'), pr.get('lines-valid'), delta.get('lines-valid'),
     )
     
-    return table
-
-
-
-
+    return metrics_table
 
 def main(files):
-    result = generateComparisionMetrics(files)
+    result = generateComparisonMetrics(files)
     if result:
-        return buildTabularData(result)
+        return generateMetricsTable(result)
     else:
-        return "Unable to generate metrics"
+        print "Unable to generate metrics"
 
 if __name__ == '__main__':
     inputFiles = [sys.argv[1], sys.argv[2]]
@@ -130,4 +92,4 @@ if __name__ == '__main__':
         sys.stdout.flush()
         sys.exit()
     else:
-        sys.exit()
+        sys.exit("invalid args")
