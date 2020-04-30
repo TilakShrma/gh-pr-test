@@ -58,54 +58,54 @@ def buildTabularData(jsonResult):
         'Total Lines': 'lines-valid'
     }
     
-    table = """|{:-^20}|{:-^20}|{:-^20}|{:-^20}|""".format('Metrics', 'Baseline', 'PR', 'Delta')
-    for key in tableMapping.keys():
-        attribute = tableMapping.get(key)
-        pr = jsonResult.get('PR').get(attribute)
-        baseline = jsonResult.get('baseline').get(attribute)
-        delta = jsonResult.get('delta').get(attribute)
+    # table = """|{:-^20}|{:-^20}|{:-^20}|{:-^20}|""".format('Metrics', 'Baseline', 'PR', 'Delta')
+    # for key in tableMapping.keys():
+    #     attribute = tableMapping.get(key)
+    #     pr = jsonResult.get('PR').get(attribute)
+    #     baseline = jsonResult.get('baseline').get(attribute)
+    #     delta = jsonResult.get('delta').get(attribute)
 
-        # line coverage to be displayed as percentage
-        if key is 'Line Coverage':
-            pr *= 100
-            baseline *= 100
-            delta *= 100
+    #     # line coverage to be displayed as percentage
+    #     if key is 'Line Coverage':
+    #         pr *= 100
+    #         baseline *= 100
+    #         delta *= 100
         
-        if key is 'Uncovered Lines':
-            pr = jsonResult.get('PR').get('lines-valid') - jsonResult.get('PR').get('lines-covered')
-            baseline = jsonResult.get('baseline').get('lines-valid') - jsonResult.get('baseline').get('lines-covered')
-            delta = jsonResult.get('delta').get('lines-valid') - jsonResult.get('delta').get('lines-covered')
+    #     if key is 'Uncovered Lines':
+    #         pr = jsonResult.get('PR').get('lines-valid') - jsonResult.get('PR').get('lines-covered')
+    #         baseline = jsonResult.get('baseline').get('lines-valid') - jsonResult.get('baseline').get('lines-covered')
+    #         delta = jsonResult.get('delta').get('lines-valid') - jsonResult.get('delta').get('lines-covered')
         
-        # table.add_row([key, baseline, pr, delta])
-        row = """\n|{: <20}|{: <20}|{: <20}|{: <20}|""".format(key,baseline,pr,delta)
-        table = table + row
+    #     # table.add_row([key, baseline, pr, delta])
+    #     row = """\n|{: <20}|{: <20}|{: <20}|{: <20}|""".format(key,baseline,pr,delta)
+    #     table = table + row
     
     # print table.draw()
     # print type(table)
     # print type(table.draw.__str__())
     # return table._fmt_text(table)
-    # baseline = jsonResult.get('baseline')
-    # pr = jsonResult.get('PR')
-    # delta = jsonResult.get('delta')
-    # table = """
-    #     |{:-^20}|{:-^20}|{:-^20}|{:-^20}|
-    #     |{:<20}|{:<20}|{:<20}|{:<20}|
-    #     |{:<20}|{:<20}|{:<20}|{:<20}|
-    #     |{:<20}|{:<20}|{:<20}|{:<20}|
-    #     |{:<20}|{:<20}|{:<20}|{:<20}|
-    #     |{:<20}|{:<20}|{:<20}|{:<20}|
-    #     |{:<20}|{:<20}|{:<20}|{:<20}|
+    baseline = jsonResult.get('baseline')
+    pr = jsonResult.get('PR')
+    delta = jsonResult.get('delta')
+    table = """
+        |{:-^16}|{:-^9}|{:-^4}|{:-^6}|
+        |{:<16}|{:<9}|{:<4}|{:<6}|
+        |{:<16}|{:<9}|{:<4}|{:<6}|
+        |{:<16}|{:<9}|{:<4}|{:<6}|
+        |{:<16}|{:<9}|{:<4}|{:<6}|
+        |{:<16}|{:<9}|{:<4}|{:<6}|
+        |{:<16}|{:<9}|{:<4}|{:<6}|
         
-    # """.format('Metrics', 'Baseline', 'PR', 'Delta',
-    #     'Skipped Test', baseline.get('skipped'), pr.get('skipped'), delta.get('skipped'),
-    #     'Failed Test', baseline.get('failures'), pr.get('failures'), delta.get('failures'),
-    #     'Total Test', baseline.get('tests'), pr.get('tests'), delta.get('tests'),
-    #     'Line Coverage %', baseline.get('line-rate')*100, pr.get('line-rate')*100, delta.get('line-rate')*100,
-    #     'uncovered lines', baseline.get('lines-valid') - baseline.get('lines-covered'),
-    #     pr.get('lines-valid') - pr.get('lines-covered'),
-    #     delta.get('lines-valid') - delta.get('lines-covered'),
-    #     'Total Lines', baseline.get('lines-valid'), pr.get('lines-valid'), delta.get('lines-valid'),
-    # )
+    """.format('Metrics', 'Baseline', 'PR', 'Delta',
+        'Skipped Test', baseline.get('skipped'), pr.get('skipped'), delta.get('skipped'),
+        'Failed Test', baseline.get('failures'), pr.get('failures'), delta.get('failures'),
+        'Total Test', baseline.get('tests'), pr.get('tests'), delta.get('tests'),
+        'Line Coverage %', baseline.get('line-rate')*100, pr.get('line-rate')*100, delta.get('line-rate')*100,
+        'uncovered lines', baseline.get('lines-valid') - baseline.get('lines-covered'),
+        pr.get('lines-valid') - pr.get('lines-covered'),
+        delta.get('lines-valid') - delta.get('lines-covered'),
+        'Total Lines', baseline.get('lines-valid'), pr.get('lines-valid'), delta.get('lines-valid'),
+    )
     
     return table
 
