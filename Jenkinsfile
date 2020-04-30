@@ -18,14 +18,10 @@ def getGitUrl() {
 }
 
 def sampleComment = '''
-    |----Metrics-----|----BaseLine----|----PR-----|----Delta----|
-    |Skipped Test    | ${sampleBaseLine}|      NA   |      NA     |
-    |Failed Test     |   NA           |      NA   |      NA     |
-    |Total Test      |   NA           |      NA   |      NA     |
-    |Line Coverage % |   NA           |      NA   |      NA     |
-    |uncovered lines |   NA           |      NA   |      NA     |
-    |Total Lines     |   NA           |      NA   |      NA     |
-    |----------------|----------------|-----------|-------------|
+    | Command | Description |
+    | --- | --- |
+    | git status | List all new or modified files |
+    | git diff | Show file differences that haven't been staged |
 '''
 
 def result = ''
@@ -68,7 +64,7 @@ timestamps {
                 result = bat (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true).trim()
                 echo "script execution result :"
                 echo "${result}"
-                pullRequest.comment(result)
+                pullRequest.comment(sampleComment)
                 } 
                 catch (Exception e) {
                     echo "exception while metrics : ${e}"
