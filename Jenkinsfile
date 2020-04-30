@@ -17,17 +17,6 @@ def getGitUrl() {
     }
 }
 
-def sampleComment = '''
-    |----Metrics-----|----BaseLine----|----PR-----|----Delta----|
-    |Skipped Test    | ${sampleBaseLine}|      NA   |      NA     |
-    |Failed Test     |   NA           |      NA   |      NA     |
-    |Total Test      |   NA           |      NA   |      NA     |
-    |Line Coverage % |   NA           |      NA   |      NA     |
-    |uncovered lines |   NA           |      NA   |      NA     |
-    |Total Lines     |   NA           |      NA   |      NA     |
-    |----------------|----------------|-----------|-------------|
-'''
-
 timestamps {
     node(label: 'master') {
         stage('Checkout Git Repo') {
@@ -45,31 +34,32 @@ timestamps {
                 echo 'XML report were not created'
             }
         }
-        stage('Copy artifacts from master'){
+        stage('Parse Xml'){
             if(env.CHANGE_ID != null){
                 copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
-                bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/cobertura-coverage.xml --type=cobertura"
-                bat "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/jest-junit.xml --type=jest"
-                bat "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/cobertura-coverage.xml --type=cobertura"
-                bat "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/jest-junit.xml --type=jest"
+                try{
+                    powershell "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/cobertura-coverage.xml --type=cobertura"
+                    powershell "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/jest-junit.xml --type=jest"
+                    powershell "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/cobertura-coverage.xml --type=cobertura"
+                    powershell "C:/Python27/python.exe ./bin/xmlToJson.py output/coverage/jest/jest-junit.xml --type=jest"
+                } 
+                catch (Exception e){
+                    echo "exception while parsing xml coverage : ${e}"
+                    throw e
+                }
             }
         }
-        stage('Generate comparision metrics'){
-            if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')){
-                echo "coverage report found for master and pr"
+        stage('Generate Comparison Metrics'){
+            if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')) {
+                try {
+                    result = powershell (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true)
+                    pullRequest.comment(result)
+                }
+                catch(Exception e){
+                    echo "Unable to generate comparison metrics: ${e}"
+                    throw e
+                }
             }
-        }
-        stage('Record Coverage') {
-            if (env.CHANGE_ID == null) {
-            // currentBuild.result = 'SUCCESS'
-            // step([$class: 'MasterCoverageAction', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
-            // } 
-            // else if (env.CHANGE_ID != null) {
-            // currentBuild.result = 'SUCCESS'
-            // step([$class: 'CompareCoverageAction', publishResultAs: 'statusCheck', scmVars: [GIT_URL: 'https://github.com/TilakShrma/gh-pr-test.git']])
-            pullRequest.comment(sampleComment)
-        }
-            
         }
         stage('Clean Workspace') {
             cleanWs notFailBuild: true
