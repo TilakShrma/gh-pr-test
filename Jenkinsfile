@@ -34,7 +34,7 @@ timestamps {
                 echo 'XML report were not created'
             }
         }
-        stage('Generate Comparison metrics'){
+        stage('Parse Xml'){
             if(env.CHANGE_ID != null){
                 copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
                 try{
@@ -47,11 +47,17 @@ timestamps {
                     echo "exception while parsing xml coverage : ${e}"
                     throw e
                 }
-                if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')) {
-                    try {
-                        result = powershell (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true)
-                        pullRequest.comment(result)
-                    }
+            }
+        }
+        stage('Generate Comparison Metrics'){
+            if(fileExists('pr-coverage-report.json') && fileExists('master-coverage-report.json')) {
+                try {
+                    result = powershell (script: "C:/Python27/python.exe ./bin/prComparisonMetrics.py master-coverage-report.json pr-coverage-report.json", returnStdout: true)
+                    pullRequest.comment(result)
+                }
+                catch(Exception e){
+                    echo "Unable to generate comparison metrics: ${e}"
+                    throw e
                 }
             }
         }
