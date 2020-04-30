@@ -88,7 +88,7 @@ def buildTabularData(jsonResult):
     pr = jsonResult.get('PR')
     delta = jsonResult.get('delta')
     table = """
-        |{:-^20}|{:-^20}|{:-^20}|{:-^20}|
+        |{:-^18}|{:-^18}|{:-^18}|{:-^18}|
         |Skipped Test    |{:<20}|{:<20}|{:<20}|
         |Failed Test     |{:<20}|{:<20}|{:<20}|
         |Total Test      |{:<20}|{:<20}|{:<20}|
