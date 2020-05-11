@@ -36,12 +36,15 @@ timestamps {
         }
         stage('Parse Xml'){
             if(env.CHANGE_ID != null){
+                echo "BRANCH_NAME ${env.BRANCH_NAME}"
                 echo "CHANGE_ID ${env.CHANGE_ID}"
                 echo "BUILD_NUMBER ${env.BUILD_NUMBER}"
                 echo "CHANGE_URL ${env.CHANGE_URL}"
                 echo "CHANGE_TARGET ${env.CHANGE_TARGET}"
                 echo "CHANGE_BRANCH ${env.CHANGE_BRANCH}"
                 echo "CHANGE_URL ${env.CHANGE_URL}"
+                echo "BUILD_DISPLAY_NAME ${env.BUILD_DISPLAY_NAME}"
+                echo "JOB_BASE_NAME ${env.JOB_BASE_NAME}"
                 copyArtifacts filter: 'output/', projectName: 'master', selector: lastCompleted(), target: 'master/'
                 try{
                     powershell "C:/Python27/python.exe ./bin/xmlToJson.py master/output/coverage/jest/cobertura-coverage.xml --type=cobertura"
