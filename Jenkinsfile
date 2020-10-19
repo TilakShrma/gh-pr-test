@@ -17,6 +17,10 @@ def getGitUrl() {
     }
 }
 
+def trigger_external_job(param) {
+    build job: '/tests/e2e_suit/e2e_scan_test/', parameters: [string(name: 'env', value: param)], propagate: false, wait: false
+}
+
 timestamps {
     node(label: 'master') {
         stage('Checkout Git Repo') {
@@ -64,7 +68,7 @@ timestamps {
         stage ('Trigger e2e job') {
             if (env.CHANGE_ID == null) {
                 echo "triggering e2e scan"
-                build job: '/tests/e2e_suit/e2e_scan_test/', parameters: [string(name: 'env', value: 'prod')], propagate: false, wait: false
+                trigger_external_job('prod')
             }
         }
         stage('Clean Workspace') {
