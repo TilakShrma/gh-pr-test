@@ -64,7 +64,7 @@ timestamps {
         stage ('Trigger e2e job') {
             if (env.CHANGE_ID == null) {
                 echo "triggering e2e scan"
-                build job: '/tests/e2e_suit/e2e_scan_test/', parameters: [string(name: 'env', value: 'prod')], propagate: false
+                build job: '/tests/e2e_suit/e2e_scan_test/', parameters: [string(name: 'env', value: 'prod')], propagate: false, wait: false
             }
         }
         stage('Clean Workspace') {
