@@ -73,7 +73,7 @@ timestamps {
                 echo "triggering e2e scan"
                 trigger_external_job('prod')
                 } else {
-                    echo REMOTE_TOKEN
+                    echo REMOTE_TOKEN.getClass()
                     def handle = triggerRemoteJob abortTriggeredJob: true, 
                                 auth: TokenAuth(apiToken: REMOTE_TOKEN, userName: 'tilsharm'),
                                 job: 'https://sqbu-jenkins.wbx2.com/service07/job/team/job/online-buy-client/job/test-jobs/job/test_remote',
