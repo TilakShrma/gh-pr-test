@@ -75,7 +75,7 @@ timestamps {
                 } else {
                     echo REMOTE_TOKEN
                     def handle = triggerRemoteJob abortTriggeredJob: true, 
-                                auth: TokenAuth(apiToken: "${REMOTE_TOKEN}", userName: 'tilsharm'),
+                                auth: TokenAuth(apiToken: REMOTE_TOKEN, userName: 'tilsharm'),
                                 job: 'https://sqbu-jenkins.wbx2.com/service07/job/team/job/online-buy-client/job/test-jobs/job/test_remote',
                                 shouldNotFailBuild: true,
                                 blockBuildUntilComplete : false
