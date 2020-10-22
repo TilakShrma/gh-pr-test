@@ -84,13 +84,14 @@ timestamps {
             //     }   
             // }
 
-            def remote_secret = credentials('REMOTE_TOKEN')   
-            echo remote_secret  
-            def handle = triggerRemoteJob abortTriggeredJob: true, 
-                                auth: TokenAuth(apiToken: remote_secret, userName: 'tilsharm'),
+            withCredentials([usernamePassword(credentialsId: 'JENKINS_CRED', passwordVariable: 'pwd', usernameVariable: 'user')]) {
+                def handle = triggerRemoteJob abortTriggeredJob: true, 
+                                auth: CredentialsAuth(credentials: 'JENKINS_CRED'),
                                 job: 'https://sqbu-jenkins.wbx2.com/service07/job/team/job/online-buy-client/job/test-jobs/job/test_remote',
                                 shouldNotFailBuild: true,
                                 blockBuildUntilComplete : false
+            }
+
         }
         stage('Clean Workspace') {
             cleanWs notFailBuild: true
