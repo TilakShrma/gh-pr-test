@@ -66,24 +66,31 @@ timestamps {
         //     }
         // }
         stage ('Trigger e2e job or remote job') {
-            withCredentials([
-                string(credentialsId: 'REMOTE_TOKEN', variable: 'REMOTE_TOKEN')
-            ]) {
-                if (env.CHANGE_ID == null) {
-                echo "triggering e2e scan"
-                trigger_external_job('prod')
-                } else {
-                    echo REMOTE_TOKEN.getClass()
-                    def handle = triggerRemoteJob abortTriggeredJob: true, 
-                                auth: TokenAuth(apiToken: REMOTE_TOKEN, userName: 'tilsharm'),
+            // withCredentials([
+            //     string(credentialsId: 'REMOTE_TOKEN', variable: 'REMOTE_TOKEN')
+            // ]) {
+            //     if (env.CHANGE_ID == null) {
+            //     echo "triggering e2e scan"
+            //     trigger_external_job('prod')
+            //     } else {
+            //         echo REMOTE_TOKEN.getClass()
+            //         def handle = triggerRemoteJob abortTriggeredJob: true, 
+            //                     auth: TokenAuth(apiToken: REMOTE_TOKEN, userName: 'tilsharm'),
+            //                     job: 'https://sqbu-jenkins.wbx2.com/service07/job/team/job/online-buy-client/job/test-jobs/job/test_remote',
+            //                     shouldNotFailBuild: true,
+            //                     blockBuildUntilComplete : false
+                                
+            //         echo handle.getBuildStatus().toString();
+            //     }   
+            // }
+
+            def remote_secret = credentials('REMOTE_TOKEN')   
+            echo remote_secret  
+            def handle = triggerRemoteJob abortTriggeredJob: true, 
+                                auth: TokenAuth(apiToken: remote_secret, userName: 'tilsharm'),
                                 job: 'https://sqbu-jenkins.wbx2.com/service07/job/team/job/online-buy-client/job/test-jobs/job/test_remote',
                                 shouldNotFailBuild: true,
                                 blockBuildUntilComplete : false
-                                
-                    echo handle.getBuildStatus().toString();
-                }   
-            }
-
         }
         stage('Clean Workspace') {
             cleanWs notFailBuild: true
