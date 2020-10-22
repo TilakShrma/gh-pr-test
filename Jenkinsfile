@@ -67,7 +67,7 @@ timestamps {
         // }
         stage ('Trigger e2e job or remote job') {
             withCredentials([
-                secret(credentialsId: 'REMOTE_TOKEN', variable: 'REMOTE_TOKEN')
+                string(credentialsId: 'REMOTE_TOKEN', variable: 'REMOTE_TOKEN')
             ]) {
                 if (env.CHANGE_ID == null) {
                 echo "triggering e2e scan"
