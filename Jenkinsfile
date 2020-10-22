@@ -66,21 +66,23 @@ timestamps {
         //     }
         // }
         stage ('Trigger e2e job or remote job') {
-            if (env.CHANGE_ID == null) {
+            withCredentials([
+                string(credentialsId: 'REMOTE_TOKEN', variable: 'REMOTE_TOKEN')
+            ]) {
+                if (env.CHANGE_ID == null) {
                 echo "triggering e2e scan"
                 trigger_external_job('prod')
-            } else {
-                echo env.remote_token
-                def handle = triggerRemoteJob abortTriggeredJob: true, 
-                                auth: TokenAuth(apiToken: env.remote_token, userName: 'tilsharm'),
+                } else {
+                    echo REMOTE_TOKEN
+                    def handle = triggerRemoteJob abortTriggeredJob: true, 
+                                auth: TokenAuth(apiToken: REMOTE_TOKEN, userName: 'tilsharm'),
                                 job: 'https://sqbu-jenkins.wbx2.com/service07/job/team/job/online-buy-client/job/test-jobs/job/test_remote',
                                 shouldNotFailBuild: true,
-                                token: 'remote_token',
                                 blockBuildUntilComplete : false
                                 
-                echo handle.getBuildStatus().toString();
+                    echo handle.getBuildStatus().toString();
+                }   
             }
-
 
         }
         stage('Clean Workspace') {
