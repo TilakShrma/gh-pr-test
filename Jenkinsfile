@@ -74,6 +74,7 @@ timestamps {
                                 auth: TokenAuth(apiToken: env.remote_token, userName: 'tilsharm'),
                                 job: 'https://sqbu-jenkins.wbx2.com/service07/job/team/job/online-buy-client/job/test-jobs/job/test_remote',
                                 shouldNotFailBuild: true,
+                                token: 'remote_token',
                                 blockBuildUntilComplete : false
                                 
                 echo handle.getBuildStatus().toString();
