@@ -65,11 +65,34 @@ timestamps {
         //         }
         //     }
         // }
-        stage ('Trigger e2e job') {
-            if (env.CHANGE_ID == null) {
-                echo "triggering e2e scan"
-                trigger_external_job('prod')
+        stage ('Trigger e2e job or remote job') {
+            // withCredentials([
+            //     string(credentialsId: 'REMOTE_TOKEN', variable: 'REMOTE_TOKEN')
+            // ]) {
+            //     if (env.CHANGE_ID == null) {
+            //     echo "triggering e2e scan"
+            //     trigger_external_job('prod')
+            //     } else {
+            //         echo REMOTE_TOKEN.getClass()
+            //         def handle = triggerRemoteJob abortTriggeredJob: true, 
+            //                     auth: TokenAuth(apiToken: REMOTE_TOKEN, userName: 'tilsharm'),
+            //                     job: 'https://sqbu-jenkins.wbx2.com/service07/job/team/job/online-buy-client/job/test-jobs/job/test_remote',
+            //                     shouldNotFailBuild: true,
+            //                     blockBuildUntilComplete : false
+                                
+            //         echo handle.getBuildStatus().toString();
+            //     }   
+            // }
+            if (env.CHANGE_ID != null) {
+                withCredentials([usernamePassword(credentialsId: 'JENKINS_CRED')]) {
+                def handle = triggerRemoteJob abortTriggeredJob: true, 
+                                auth: CredentialsAuth(credentials: 'JENKINS_CRED'),
+                                job: 'https://sqbu-jenkins.wbx2.com/service05/job/team/job/online-ecomm-client/job/test-jobs/job/test_remote/',
+                                shouldNotFailBuild: true,
+                                blockBuildUntilComplete : false
+                }
             }
+
         }
         stage('Clean Workspace') {
             cleanWs notFailBuild: true
