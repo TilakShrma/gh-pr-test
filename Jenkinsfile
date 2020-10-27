@@ -83,13 +83,14 @@ timestamps {
             //         echo handle.getBuildStatus().toString();
             //     }   
             // }
-
-            withCredentials([usernamePassword(credentialsId: 'JENKINS_CRED', passwordVariable: 'pwd', usernameVariable: 'user')]) {
+            if (env.CHANGE_ID != null) {
+                withCredentials([usernamePassword(credentialsId: 'JENKINS_CRED')]) {
                 def handle = triggerRemoteJob abortTriggeredJob: true, 
                                 auth: CredentialsAuth(credentials: 'JENKINS_CRED'),
-                                job: 'https://sqbu-jenkins.wbx2.com/service07/job/team/job/online-buy-client/job/test-jobs/job/test_remote',
+                                job: 'https://sqbu-jenkins.wbx2.com/service05/job/team/job/online-ecomm-client/job/test-jobs/job/test_remote/',
                                 shouldNotFailBuild: true,
                                 blockBuildUntilComplete : false
+                }
             }
 
         }
